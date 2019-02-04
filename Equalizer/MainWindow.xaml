@@ -1,0 +1,86 @@
+﻿<Window x:Class="Equalizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+        xmlns:local="clr-namespace:Equalizer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+  
+
+        <Border Padding="10">
+            <!-- Stack Pannel is a funny thig inside witch you can add whatever you want
+            so you can create your own block -->
+        <StackPanel>
+            <Grid Margin="10 10 10 10">
+                <Grid.RowDefinitions> <!-- Defines the number of rows-->
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/> <!-- the * indicates automatic height -->
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Variable Name" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="Variable Value" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="0" Grid.Row="1"  Text="{Binding Path=VariableInput.Name, UpdateSourceTrigger=PropertyChanged}"/> <!-- Binding to the Variable in VarViewModel, additionally Property changed fired so value updates whenever user inputs any letter-->
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=VariableInput.Value, UpdateSourceTrigger=PropertyChanged,StringFormat={}{##.##}}"/> <!-- StringFormat specifizes tha user inputs numbers, fractions written with dots-->
+                <Button Content="Submit" Grid.Column="2" Grid.Row="1" Command="{Binding ClickCommand}"/>
+            </Grid>
+            
+                
+            
+            
+            <DataGrid ItemsSource="{Binding VariablesList}" AutoGenerateColumns="False" CanUserAddRows="False" SelectedItem="{Binding SelectedVar}">
+                <DataGrid.Columns>
+                    
+                    <!-- The Variable Column-->
+                <DataGridTemplateColumn Header="Variable">
+                    <DataGridTemplateColumn.CellTemplate> <!-- It handles the view of the item, so this is what user see in the cell-->
+                            <DataTemplate>
+                                <controls:FormulaControl Formula="{Binding Name}"/> <!-- This is item  from externall nuget library (WPFMath) it is able to display latex equation -->
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate> <!-- this handles the input made by user in this cell -->
+                        <DataTemplate>
+                            <TextBox Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                    
+                    <!-- The Value Column-->
+                    <DataGridTemplateColumn Header="Value">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:FormulaControl Formula="{Binding Value}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Value}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <!-- Delete Column-->
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- Binding bellow is special because the DeleteCommand is on the same level on the data tree
+                                as VariableList, to make a succesful binding we have to step outside DataGrid and
+                                look for exact metod-->
+                                <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"   />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        </Border>
+ 
+</Window>
