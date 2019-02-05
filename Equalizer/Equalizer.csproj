@@ -91,6 +91,7 @@
     <Compile Include="Directory\Structure.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CommandHandler.cs" />
+    <Compile Include="ViewModel\EqViewModel.cs" />
     <Compile Include="ViewModel\VarViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

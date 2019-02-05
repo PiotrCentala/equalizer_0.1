@@ -27,8 +27,8 @@ namespace Equalizer
         {
             
 
-            string python = @"C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\python.exe";
-            string myPythonApp = @"C:\Users\peter\Documents\GitHub\Equalizer\Equalizer\Equalizer\Directory\logic.py";
+            string python = @"C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\python.exe";  //IMPORTANT, change this to your python compiler path 
+            string myPythonApp = @"C:\Users\peter\Documents\GitHub\Equalizer\Equalizer\Equalizer\Directory\logic.py";   //IMPORTANT, change this to your python code path 
             // Create new process start info 
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
 

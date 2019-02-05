@@ -19,10 +19,6 @@ namespace Equalizer
         /// Value of the variable given by user
         /// </summary>
         public float Value { get; set; }
-        /// <summary>
-        /// Latex expression
-        /// </summary>
-        public string Latex { get { return Structure.VariableToLatex(this.Name, this.Value); }  }
-
+      
     }
 }
